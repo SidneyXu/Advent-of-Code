@@ -93,3 +93,4 @@ _testmain.go
 
 /.idea/
 *.iml
+/out/
