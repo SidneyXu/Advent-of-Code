@@ -3,9 +3,6 @@ import java.nio.file.Files;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-/**
- * Created by SidneyXu on 2016/01/06.
- */
 public class Main {
 
     public static void main(String[] args) throws Exception {

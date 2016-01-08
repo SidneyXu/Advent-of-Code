@@ -1,31 +1,64 @@
-def floor = new File("input.txt")
-        .eachLine {
-    it.split("")
-            .collect {
-        if (it == "(")
-            1
-        else if (it == ")")
-            -1
-        else
-            0
-    }.inject { v1, v2 -> v1 + v2 }
-}.inject { v1, v2 -> v1 + v2 }
-
-println(floor)
-
-def sum = 0
-def pos = 0
-new File("input.txt")
+def currentLocation = [0, 0]
+def houses = new File("input.txt")
         .text
-        .split("")
-        .eachWithIndex { String entry, int i ->
-    if (sum == -1 && pos == 0) {
-        pos = i
-        return
+        .collect {
+    switch (it as char) {
+        case '^':
+            currentLocation[1]++
+            break
+        case 'v':
+            currentLocation[1]--
+            break
+        case '>':
+            currentLocation[0]++
+            break
+        case '<':
+            currentLocation[0]--
+            break
     }
-    if (entry == "(")
-        sum++
-    else if (entry == ")")
-        sum--
-}
-println(pos)
+    currentLocation.clone()
+}.unique()
+println(houses.size())
+
+def santa = [0, 0]
+def robot = [0, 0]
+houses = new File("input.txt")
+        .bytes
+        .toList()
+        .withIndex()
+        .collect { c, i ->
+    if (i % 2 == 0) {
+        switch (c as char) {
+            case '^':
+                santa[1]++
+                break
+            case 'v':
+                santa[1]--
+                break
+            case '>':
+                santa[0]++
+                break
+            case '<':
+                santa[0]--
+                break
+        }
+    } else {
+        switch (c as char) {
+            case '^':
+                robot[1]++
+                break
+            case 'v':
+                robot[1]--
+                break
+            case '>':
+                robot[0]++
+                break
+            case '<':
+                robot[0]--
+                break
+        }
+    }
+    [santa.clone(), robot.clone()]
+}.collectMany { it }
+        .unique()
+println(houses.size())

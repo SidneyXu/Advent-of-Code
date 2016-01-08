@@ -1,8 +1,3 @@
-package day02
-
-/**
- * Created by SidneyXu on 2016/01/07.
- */
 def totalWrapping = new File("input.txt")
         .readLines()
         .collect {

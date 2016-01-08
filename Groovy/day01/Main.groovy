@@ -1,7 +1,3 @@
-/**
- * Created by SidneyXu on 2016/01/07.
- */
-
 def floor = new File("input.txt")
         .eachLine {
     it.split("")

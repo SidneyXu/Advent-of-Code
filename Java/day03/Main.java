@@ -1,30 +1,57 @@
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-/**
- * Created by SidneyXu on 2016/01/06.
- */
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        int totalWrapping = Files.lines(new File("input.txt").toPath())
-                .map(line -> {
-                    IntStream intStream = Stream.of(line.split("x")).mapToInt(Integer::valueOf);
-                    int[] lwh = intStream.sorted().toArray();
-                    int minSide = lwh[0] * lwh[1];
-                    return 2 * (lwh[0] * lwh[1] + lwh[1] * lwh[2] + lwh[0] * lwh[2]) + minSide;
-                }).reduce((integer, integer2) -> integer + integer2).get();
-        System.out.println(totalWrapping);
+        List<Integer> currentLocation = Arrays.asList(0, 0);
 
-        int totalLength = Files.lines(new File("input.txt").toPath())
-                .map(line -> {
-                    IntStream intStream = Stream.of(line.split("x")).mapToInt(Integer::valueOf);
-                    int[] lwh = intStream.sorted().toArray();
-                    int minPerimeter = 2 * (lwh[0] + lwh[1]);
-                    return lwh[0] * lwh[1] * lwh[2] + minPerimeter;
-                }).reduce((integer, integer2) -> integer + integer2).get();
-        System.out.println(totalLength);
+        Stream houses = Files.lines(new File("input.txt").toPath())
+                .flatMap(line -> Stream.of(line.split("")))
+                .map(s -> {
+                    matchPath(s, currentLocation);
+                    return new ArrayList<>(currentLocation);
+                }).distinct();
+        System.out.println(houses.count());
+
+        List<Integer> santa = Arrays.asList(0, 0);
+        List<Integer> robot = Arrays.asList(0, 0);
+        List<String> paths = Files.lines(new File("input.txt").toPath())
+                .flatMap(line -> Stream.of(line.split("")))
+                .collect(Collectors.toList());
+        Stream houses2 = IntStream.range(0, paths.size())
+                .mapToObj(i -> {
+                    if (i % 2 == 0) {
+                        matchPath(paths.get(i), santa);
+                    } else {
+                        matchPath(paths.get(i), robot);
+                    }
+                    return Arrays.asList(santa, robot);
+                }).flatMap(lists -> Stream.of(lists.get(0), lists.get(1)))
+                .distinct();
+        System.out.println(houses2.count());
+    }
+
+    private static void matchPath(String path, List<Integer> role) {
+        switch (path) {
+            case "^":
+                role.set(1, role.get(1) + 1);
+                break;
+            case "v":
+                role.set(1, role.get(1) - 1);
+                break;
+            case ">":
+                role.set(0, role.get(0) + 1);
+                break;
+            case "<":
+                role.set(0, role.get(0) - 1);
+                break;
+        }
     }
 }

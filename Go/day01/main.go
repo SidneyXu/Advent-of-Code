@@ -14,8 +14,7 @@ const (
 func main() {
 	f, err := os.Open("input.txt")
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		panic(err)
 	}
 	floor := 0
 	pos := 0

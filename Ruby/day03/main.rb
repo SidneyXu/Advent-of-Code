@@ -2,8 +2,8 @@ require 'set'
 content = File.open('input.txt').read
 
 current_location = [0, 0]
-set = Set.new
-set.add([0, 0])
+houses = Set.new
+houses.add([0, 0])
 
 content.each_char do |c|
   case c
@@ -16,46 +16,36 @@ content.each_char do |c|
     when '<'
       current_location[0] -= 1
   end
-  set.add(current_location.dup)
+  houses.add(current_location.dup)
 end
 
-puts set.count
+puts houses.count
 
-set.clear
-set.add([0, 0])
+houses.clear
+houses.add([0, 0])
 santa = [0, 0]
 robot = [0, 0]
 
 content.each_char.with_index do |c, i|
+  if i % 2 == 0
+    location = santa
+  else
+    location = robot
+  end
   case c
     when '^'
-      if i % 2 == 0
-        santa[1] += 1
-      else
-        robot[1] += 1
-      end
+      location[1] += 1
     when 'v'
-      if i % 2 == 0
-        santa[1] -= 1
-      else
-        robot[1] -= 1
-      end
+      location[1] -= 1
     when '>'
-      if i % 2 == 0
-        santa[0] += 1
-      else
-        robot[0] += 1
-      end
+      location[0] += 1
     when '<'
-      if i % 2 == 0
-        santa[0] -= 1
-      else
-        robot[0] -= 1
-      end
+      location[0] -= 1
+    else
   end
-  set.add(santa.dup)
-  set.add(robot.dup)
+  houses.add(santa.dup)
+  houses.add(robot.dup)
 end
 
-puts set.count
+puts houses.count
 

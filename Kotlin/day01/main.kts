@@ -1,10 +1,10 @@
 import java.io.File
 
 val content = File("input.txt").readText("UTF-8")
-var floor = content.split("").map {
-    if (it == "(")
+var floor = content.map {
+    if (it == '(')
         1
-    else if (it == ")")
+    else if (it == ')')
         -1
     else 0
 }.reduce { n1, n2 -> n1 + n2 }

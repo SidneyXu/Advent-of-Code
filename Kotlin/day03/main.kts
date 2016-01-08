@@ -1,53 +1,37 @@
 import java.io.File
 
-var currentLocation = arrayOf(0, 0)
-val set = hashSetOf<Array<Int>>()
-set.add(arrayOf(0, 0))
-val x = File("input.txt").readText()
-        .split("")
+var currentLocation = Pair(0, 0)
+var houses = File("input.txt").readText()
         .map {
             when (it) {
-                "^" -> currentLocation[1] += 1
-                "v" -> currentLocation[1] -= 1
-                ">" -> currentLocation[0] += 1
-                "<" -> currentLocation[0] -= 1
+                '^' -> currentLocation = Pair(currentLocation.first, currentLocation.second + 1)
+                'v' -> currentLocation = Pair(currentLocation.first, currentLocation.second - 1)
+                '>' -> currentLocation = Pair(currentLocation.first + 1, currentLocation.second)
+                '<' -> currentLocation = Pair(currentLocation.first - 1, currentLocation.second)
             }
-            set.add(currentLocation.clone())
-            currentLocation.clone()
-        }
-println(set.size)
-println(x.groupBy { it.hashCode() }.size)
+            currentLocation
+        }.distinct()
+println(houses.size)
 
-set.clear()
-set.add(arrayOf(0, 0))
-val santa = arrayOf(0, 0)
-val robot = arrayOf(0, 0)
-File("input.txt").readText()
-        .split("")
-        .mapIndexed { i, s ->
-            when (s) {
-                "^" ->
-                    if (i % 2 == 0)
-                        santa[1] += 1
-                    else
-                        robot[1] += 1
-                "v" ->
-                    if (i % 2 == 0)
-                        santa[1] -= 1
-                    else
-                        robot[1] -= 1
-                ">" ->
-                    if (i % 2 == 0)
-                        santa[0] += 1
-                    else
-                        robot[0] += 1
-                "<" ->
-                    if (i % 2 == 0)
-                        santa[0] -= 1
-                    else
-                        robot[0] -= 1
-            }
-            set.add(santa.clone())
-            set.add(robot.clone())
+var santa = Pair(0, 0)
+var robot = Pair(0, 0)
+houses = File("input.txt").readText().mapIndexed { i, c ->
+    if (i % 2 == 0) {
+        when (c) {
+            '^' -> santa = Pair(santa.first, santa.second + 1)
+            'v' -> santa = Pair(santa.first, santa.second - 1)
+            '>' -> santa = Pair(santa.first + 1, santa.second)
+            '<' -> santa = Pair(santa.first - 1, santa.second)
         }
-println(set.size)
+    } else {
+        when (c) {
+            '^' -> robot = Pair(robot.first, robot.second + 1)
+            'v' -> robot = Pair(robot.first, robot.second - 1)
+            '>' -> robot = Pair(robot.first + 1, robot.second)
+            '<' -> robot = Pair(robot.first - 1, robot.second)
+        }
+    }
+    Pair(santa, robot)
+}.flatMap { listOf(it.first, it.second) }
+        .distinct()
+println(houses.size)
