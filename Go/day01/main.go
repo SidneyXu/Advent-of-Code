@@ -16,6 +16,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	
 	floor := 0
 	pos := 0
 	found := false
