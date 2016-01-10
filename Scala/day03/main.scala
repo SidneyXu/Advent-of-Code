@@ -20,7 +20,6 @@ var houses2 = Source.fromFile("input.txt").mkString
             case ((t1, t2), ('>', i)) => (t1, (t2._1 + 1, t2._2))
             case ((t1, t2), ('<', i)) if i % 2 == 0 => ((t1._1 - 1, t1._2), t2)
             case ((t1, t2), ('<', i)) => (t1, (t2._1 - 1, t2._2))
-        }
-        .flatMap(it => List(it._1, it._2))
+        }.flatMap(it => List(it._1, it._2))
         .distinct
 println(houses2.size)
