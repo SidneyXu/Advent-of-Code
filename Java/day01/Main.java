@@ -38,6 +38,5 @@ public class Main {
             pos.incrementAndGet();
         });
         System.out.println(pos.get());
-
     }
 }
