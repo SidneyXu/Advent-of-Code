@@ -12,7 +12,8 @@ println(floor)
 
 var pos = 0
 content.fold(0) { n, chr ->
-    if (n == -1) return@fold n
+    if (n == -1) 
+        return@fold n
     pos++
     if (chr == '(')
         n + 1
