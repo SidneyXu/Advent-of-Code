@@ -1,6 +1,6 @@
 # Advent-of-Code
 
-My solutions for the[Advent of Code](http://adventofcode.com/) in multiple languages(Java, Groovy, Scala, Kotlin, Go and Ruby).
+My solutions for the [Advent of Code](http://adventofcode.com/) in multiple languages(Java, Groovy, Scala, Kotlin, Go and Ruby).
 
 ## How to run
 
