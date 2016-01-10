@@ -1,6 +1,7 @@
 floor = 0
 pos = 0
 found = false
+
 File.open('input.txt').each_char do |c|
   if !found && floor != -1
     pos += 1
